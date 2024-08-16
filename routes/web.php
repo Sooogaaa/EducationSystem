@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('user')->namespace('User')->name('user.')->group(function () {
+
+    
+
 });
+
+//ユーザ用トップ画面へのルート
+Route::get('/top', [App\Http\Controllers\User\TopController::class, 'showTop'])->name('show.top');
+
+//ユーザ用お知らせ画面へのルート
+Route::get('/article/{id}', [App\Http\Controllers\User\ArticleController::class, 'showArticle'])->name('show.article');
+
