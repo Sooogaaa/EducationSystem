@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Article;
+
+class ArticleController extends Controller
+{
+    public function __construct() {
+        $this->article = new Article();
+    }
+
+    //お知らせ内容表示
+    public function showArticle($id) {
+        $article = $this->article->findProductById($id);
+        return view('article', compact('article'));
+    }
+}
