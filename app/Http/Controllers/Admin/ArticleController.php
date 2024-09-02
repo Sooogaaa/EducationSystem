@@ -10,11 +10,17 @@ class ArticleController extends Controller
 {
     public function __construct(Article $article) {
         $this->article = $article;
-    } 
+    }
+    
+    //お知らせ一覧画面表示
+    public function showArticleList(Request $request) {
+        $items =$this->article->searchArticle($request);
+        return view('admin/article_list', compact('items'));
+    }
 
     //お知らせ新規登録画面表示
     public function showArticleCreate(Request $request) {
-        return view('article_create');
+        return view('admin/article_create');
     }
     
     //お知らせ新規登録処理
@@ -38,7 +44,7 @@ class ArticleController extends Controller
     //お知らせ編集画面表示
     public function showArticleEdit($id) {
         $article = $this->article->findArticleById($id);
-        return view('article_create', compact('article'));
+        return view('admin/article_create', compact('article'));
     }
 
     //お知らせ編集処理
@@ -57,5 +63,11 @@ class ArticleController extends Controller
 
         $updateArticle = $this->article->fillArticle($request, $id);
         return redirect()->route('show.article.edit', ['id'=> $id]);
+    }
+
+    //お知らせ削除処理
+    public function destroyArticle(Request $request ,$id) {
+        $deleteArticle = $this->article->deleteArticle($id);
+        return redirect()->route('show.article.list');
     }
 }

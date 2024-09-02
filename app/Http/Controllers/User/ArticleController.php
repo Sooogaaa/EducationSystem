@@ -15,6 +15,6 @@ class ArticleController extends Controller
     //お知らせ内容表示
     public function showArticle($id) {
         $article = $this->article->findArticleById($id);
-        return view('article', compact('article'));
+        return view('user/article', compact('article'));
     }
 }

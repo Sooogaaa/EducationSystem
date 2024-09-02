@@ -43,3 +43,6 @@ Route::get('/article_edit/{id}', [App\Http\Controllers\Admin\ArticleController::
 
 //管理者用お知らせ編集処理へのルート
 Route::put('/article_update/{id}', [App\Http\Controllers\Admin\ArticleController::class, 'updateArticle'])->name('article.update');
+
+//管理者用お知らせ削除処理へのルート
+Route::delete('/article_destroy/{id}', [App\Http\Controllers\Admin\ArticleController::class, 'destroyArticle'])->name('article.destroy');

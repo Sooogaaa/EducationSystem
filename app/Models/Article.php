@@ -23,10 +23,15 @@ class Article extends Model
         'article_contents',        
     ];
 
+    //Articlesテーブルのレコード全件取得
+    public function searchArticle($request) {
+        return Article::all();
+    }
+
     //リクエストされたIDをもとにArticlesテーブルのレコードを1件取得
     public function findArticleById($id) {
         return Article::find($id);
-    }
+    }    
 
     //新規登録処理
     public function insertArticle($request) {
@@ -72,4 +77,19 @@ class Article extends Model
             return back();
         }        
     }
+
+    //削除処理
+    public function deleteArticle($id) {
+        DB::beginTransaction();
+
+        try{
+            $result = $this->destroy($id);
+            DB::commit();
+            return $result;
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
+    }    
 }
