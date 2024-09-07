@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a href="{{ route('show.article.list') }}">←戻る</a>
+<a href="{{ route('admin.show.article.list') }}">←戻る</a>
 
 <div class="row justify-content-center">
 	<div class="col-md-10">
@@ -14,7 +14,7 @@
 			</div>
 		</div>
 
-		<form action="{{ isset($article) ? route('article.update', $article->id) : route('article.store') }}" method="POST" enctype='multipart/form-data'>
+		<form action="{{ isset($article) ? route('admin.article.update', $article->id) : route('admin.article.store') }}" method="POST" enctype='multipart/form-data'>
 			@csrf
 			@if(isset($article))
 			    @method('PUT')

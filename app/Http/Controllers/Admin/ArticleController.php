@@ -38,7 +38,7 @@ class ArticleController extends Controller
         ]);
 
         $registerArticle = $this->article->insertArticle($request);
-        return redirect()->route('show.article.create');
+        return redirect()->route('admin.show.article.create');
     }
     
     //お知らせ編集画面表示
@@ -62,12 +62,12 @@ class ArticleController extends Controller
         ]);
 
         $updateArticle = $this->article->fillArticle($request, $id);
-        return redirect()->route('show.article.edit', ['id'=> $id]);
+        return redirect()->route('admin.show.article.edit', ['id'=> $id]);
     }
 
     //お知らせ削除処理
     public function destroyArticle(Request $request ,$id) {
         $deleteArticle = $this->article->deleteArticle($id);
-        return redirect()->route('show.article.list');
+        return redirect()->route('admin.show.article.list');
     }
 }

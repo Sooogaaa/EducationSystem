@@ -2,7 +2,7 @@
 
 @section('content')
 
-<a href="{{ route('show.top') }}">←戻る</a>
+<a href="{{ route('user.show.top') }}">←戻る</a>
 
 <div class="row justify-content-center">
 	<div class="col-md-10">
