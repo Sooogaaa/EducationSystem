@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\Auth\RegisterController;
-use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\TopController;
 use App\Http\Controllers\Admin\CurriculumController;
 use App\Http\Controllers\Admin\ArticleController;
@@ -43,14 +43,14 @@ Route::prefix('admin')->namespace('Admin')->name('show.')->group(function () {
     // ログアウト
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::prefix('auth')->namespace('Auth')->group(function(){
-    // 管理者登録画面のルート
-    Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('register');
-    Route::post('register', [RegisterController::class, 'register'])->name('register.create');
+    Route::prefix('auth')->namespace('Auth')->group(function () {
+        // 管理者登録画面のルート
+        Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('register');
+        Route::post('register', [RegisterController::class, 'register'])->name('register.create');
 
-    // 管理者ログイン画面のルート
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login'])->name('login.send');
+        // 管理者ログイン画面のルート
+        Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [LoginController::class, 'login'])->name('login.send');
     });
 
 

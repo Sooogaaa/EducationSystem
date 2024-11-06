@@ -8,7 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\ValidationException;
+use Illuminate\Validation\ValidationException;
 
 
 
