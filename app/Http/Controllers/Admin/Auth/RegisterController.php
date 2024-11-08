@@ -4,16 +4,19 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\RegistersUsers;
+
 
 
 
 class RegisterController extends Controller
 {
+
+    use RegistersUsers;
+
     protected $redirectTo = '/admin/auth/login';
 
     public function showRegisterForm()
@@ -51,24 +54,24 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function register(RegisterRequest $request)
-    {
-        try {
-            $validatedData = $request->validated();
+    // public function register(RegisterRequest $request)
+    // {
+    //     try {
+    //         $validatedData = $request->validated();
 
-            $admins = new Admin;
-            $admins->name = $validatedData['name'];
-            $admins->name_kana = $validatedData['name_kana'];
-            $admins->email = $validatedData['email'];
-            $admins->password = Hash::make($validatedData['password']);
+    //         $admins = new Admin;
+    //         $admins->name = $validatedData['name'];
+    //         $admins->name_kana = $validatedData['name_kana'];
+    //         $admins->email = $validatedData['email'];
+    //         $admins->password = Hash::make($validatedData['password']);
 
-            $admins->save();
+    //         $admins->save();
 
 
-            // 登録後、ログイン画面にリダイレクト
-            return redirect()->route('show.login');
-        } catch (ValidationException $e) {
-            return back()->withErrors($e->validator)->withInput();
-        }
-    }
+    //         // 登録後、ログイン画面にリダイレクト
+    //         return redirect()->route('show.login');
+    //     } catch (ValidationException $e) {
+    //         return back()->withErrors($e->validator)->withInput();
+    //     }
+    // }
 }

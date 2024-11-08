@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>管理トップ</title>
-  <link rel="stylesheet" href="{{ asset('/css/admin/top.css') }})">
-
+  <link rel="stylesheet" href="{{ asset('/css/admin/top.css') }}">
 </head>
 
 <body>
@@ -15,10 +14,11 @@
   @section('title', '管理トップ')
 
   @section('content')
-  <ul class="user_tata">
-    <li>ユーザーネーム：{{ $adminUser->name ?? '未ログイン' }}</li>
-    <li>メールアドレス：{{ $adminUser->email ?? '未ログイン' }}</li>
-  </ul>
+
+  <div class="login_user">
+    <p>ユーザーネーム：{{ $adminUser->name }}</p>
+    <p>メールアドレス：{{ $adminUser->email }}</p>
+  </div>
   @endsection
 </body>
 

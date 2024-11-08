@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* main */
+
+.login_user {
+  width: 750px;
+  margin: auto;
+  margin-top: 60px;
+  padding: 40px;
+  border: 1px solid #8e8d8d;
+}
+
+p {
+  color: #8e8d8d;
+  margin: 10px;
+}
+
+
+/* 共通バナー */
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: aqua;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.banner {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+li {
+  list-style-type: none;
+}
+
+button {
+  border: none;
+  padding: 8px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 7px;
+  background-color: rgb(118, 117, 117);
+  color: aliceblue;
+}
+
+.logout {
+  border: none;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 7px;
+}

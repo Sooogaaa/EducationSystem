@@ -16,7 +16,7 @@ class TopController extends Controller
     public function showTop()
     {
         $adminUser = Auth::guard('admin')->user();
-        return view('admin.top', ['adminUser' => '$adminUser']);
+        return view('admin.top', ['adminUser' => $adminUser]);
     }
 
     public function logout(Request $request)

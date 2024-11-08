@@ -3,13 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>管理バナー</title>
+  <link rel="stylesheet" href="{{ asset('/css/admin/banner_edit.css') }}">
 </head>
 
 <body>
   <header>
-    <ul class="transition">
+    <ul class="banner">
       <form action="#" method="GET">
         <li>
           <button type="submit">授業管理</button>
