@@ -10,45 +10,41 @@
 </head>
 
 <body>
-  <header>
-    <ul class="banner">
-      <form action="#" method="GET">
-        <li>
-          <button type="submit">授業管理</button>
-        </li>
-      </form>
+    @extends('admin.layouts.app')
 
-      <form action="#" method="GET">
-        <li>
-          <button type="submit">お知らせ管理</button>
-        </li>
-      </form>
+    @section('title', '管理トップ')
 
-      <form action="{{ route('show.banner.edit') }}" method="GET">
-        <li>
-          <button type="submit">バナー管理</button>
-        </li>
-      </form>
-    </ul>
+    @section('content')
 
-    <form action="{{ route('show.logout') }}" method="post" id="logout">
-      @csrf
-      <input type="submit" class="logout" value="ログアウト">
-    </form>
-  </header>
-
-  <a href="{{ route('show.top') }}" class="back">戻る</a>
+  <a href="{{ route('show.top') }}" class="back">←戻る</a>
 
   <h1>バナー管理</h1>
   <form action="{{ route('show.banner.store') }}" method="post" enctype="multipart/form-data">
     @csrf
     <table id="bannerTable">
-      @foreach($banners as $banner)
-      <tr>
-        <td></td>
-      </tr>
+      <tbody>
+        @foreach($banners as $banner)
+        <tr>
+          <td><img src="{{ asset('storage/' . $banner->image) }}" class="banner_image" id="banner-{{ $banner->id }}"></td>
+          <td><input type="button" name="banner_images[]" class="file-input" onchange="previewImage(event, 1)" multiple></td>
+          <td>
+            <button type="button" class="delete_button" onclick="deleteExistingRow({{ $banner->id }}, '{{ route('show.banner.delete', $banner->id) }}')">-</button>
+          </td>
+        </tr>
+        @endforeach
+      </tbody>
     </table>
-  </form>
-</body>
 
+    @if ($errors->any())
+    <script>
+      let errorMessage = "";
+      @foreach($errors -> all() as $error)
+        errorMessage += "{{ $error }}\n";
+      @endforeach
+      alert(errorMessage);
+    </script>
+    @endif
+  </form>
+  @endsection
+</body>
 </html>

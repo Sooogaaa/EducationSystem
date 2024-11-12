@@ -21,7 +21,7 @@
           <button type="submit">お知らせ管理</button>
         </li>
       </form>
-      <form action="#" method="GET">
+      <form action="{{ route('show.banner.edit') }}" method="GET">
         <li>
           <button type="submit">バナー管理</button>
         </li>
