@@ -1,0 +1,64 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.back {
+    margin-left: 50px;
+    text-decoration: none;
+}
+
+h1 {
+    margin: 5px 0 5px 50px;
+}
+
+.bannerTable {
+    width: 550px;
+    margin: auto;
+    margin-top: 10px;
+    padding: 30px;
+}
+
+.banner_image {
+    width: 150px;
+}
+
+.addition_button {
+    background-color: rgb(100, 249, 46);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 25px;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    margin: 20px 20px 20px 350px;
+}
+
+.delete_button {
+    background-color: rgb(249, 46, 46);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    line-height: 20px;
+    font-size: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.register {
+    width: 140px;
+    height: 30px;
+    background-color: rgb(127, 127, 127);
+    color: aliceblue;
+    border: none;
+    display: flex;
+    margin: auto;
+}
