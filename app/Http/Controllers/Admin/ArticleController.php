@@ -8,13 +8,66 @@ use App\Models\Article;
 
 class ArticleController extends Controller
 {
-    public function __construct() {
-        $this->article = new Article();
+    public function __construct(Article $article) {
+        $this->article = $article;
+    }
+    
+    //お知らせ一覧画面表示
+    public function showArticleList(Request $request) {
+        $items =$this->article->searchArticle($request);
+        return view('admin/article_list', compact('items'));
     }
 
-    //お知らせ内容表示
-    public function showArticle($id) {
-        $article = $this->article->findProductById($id);
-        return view('article', compact('article'));
+    //お知らせ新規登録画面表示
+    public function showArticleCreate(Request $request) {
+        return view('admin/article_create');
+    }
+    
+    //お知らせ新規登録処理
+    public function storeArticle(Request $request) {
+        $validatedData = $request->validate([
+            'posted_date' => 'required|date',
+            'title' => 'required|max:255',
+            'article_contents' => 'required',
+        ], [
+            'posted_date.required' => '投稿日時は必須入力項目です。',
+            'posted_date.date' => '投稿日時は日付の形式で入力してください。',
+            'title.required' => 'タイトルは必須入力項目です。',
+            'title.max' => 'タイトルは255文字以内で入力してください。',
+            'article_contents.required' => '本文は必須入力項目です。',
+        ]);
+
+        $registerArticle = $this->article->insertArticle($request);
+        return redirect()->route('admin.show.article.create');
+    }
+    
+    //お知らせ編集画面表示
+    public function showArticleEdit($id) {
+        $article = $this->article->findArticleById($id);
+        return view('admin/article_create', compact('article'));
+    }
+
+    //お知らせ編集処理
+    public function updateArticle(Request $request, $id) {
+        $validatedData = $request->validate([
+            'posted_date' => 'required|date',
+            'title' => 'required|max:255',
+            'article_contents' => 'required',
+        ], [
+            'posted_date.required' => '投稿日時は必須入力項目です。',
+            'posted_date.date' => '投稿日時は日付の形式で入力してください。',
+            'title.required' => 'タイトルは必須入力項目です。',
+            'title.max' => 'タイトルは255文字以内で入力してください。',
+            'article_contents.required' => '本文は必須入力項目です。',
+        ]);
+
+        $updateArticle = $this->article->fillArticle($request, $id);
+        return redirect()->route('admin.show.article.edit', ['id'=> $id]);
+    }
+
+    //お知らせ削除処理
+    public function destroyArticle(Request $request ,$id) {
+        $deleteArticle = $this->article->deleteArticle($id);
+        return redirect()->route('admin.show.article.list');
     }
 }
