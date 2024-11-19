@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'name_kana' => ['required', 'string', 'max:255'],
+            'name_kana' => ['required', 'string', 'max:255', 'regex:/^[ァ-ヶー]+$/u'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admin'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];

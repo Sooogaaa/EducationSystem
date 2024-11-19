@@ -38,7 +38,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'name_kana' => ['required', 'string', 'max:255'],
+            'name_kana' => ['required', 'string', 'max:255', 'regex:/^[ァ-ヶー]+$/u'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -53,25 +53,4 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-
-    // public function register(RegisterRequest $request)
-    // {
-    //     try {
-    //         $validatedData = $request->validated();
-
-    //         $admins = new Admin;
-    //         $admins->name = $validatedData['name'];
-    //         $admins->name_kana = $validatedData['name_kana'];
-    //         $admins->email = $validatedData['email'];
-    //         $admins->password = Hash::make($validatedData['password']);
-
-    //         $admins->save();
-
-
-    //         // 登録後、ログイン画面にリダイレクト
-    //         return redirect()->route('show.login');
-    //     } catch (ValidationException $e) {
-    //         return back()->withErrors($e->validator)->withInput();
-    //     }
-    // }
 }

@@ -29,7 +29,7 @@
           <td><img src="{{ asset('storage/' . $banner->image) }}" id="banner-{{ $banner->id }}" class="banner_image"></td>
           <td><input type="file" name="banner_images[]" class="file-input" onchange="previewImage(event, 1)" multiple></td>
           <td>
-          <button class="delete_button" type="button" onclick="deleteExistingRow({{ $banner->id }}, '{{route('show.banner.delete', $banner->id }}')">ー</button>
+          <button class="delete_button" type="button" onclick="deleteExistingRow({{ $banner->id }}, '{{ route('show.banner.delete', $banner->id) }}')">ー</button>
           </td>
           @if ($errors->any())
             <script>
