@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Banner;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BannerRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,10 +27,14 @@ class BannerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function showBannerStore(BannerRequest $request)
     {
         $request->validated();
         $count = 0;
+
+        DB::beginTransaction();
 
         try {
             if ($request->hasFile('banner_images')) {
@@ -40,8 +42,8 @@ class BannerController extends Controller
                     $path = $file->store('banners', 'public');
                     DB::table('banners')->insert([
                         'image' => $path,
-                        'create_at' => now(),
-                        'update_at' => now(),
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ]);
                     $count++;
                 }
@@ -49,17 +51,27 @@ class BannerController extends Controller
             if ($count === 1) {
                 $message = '画像ファイルを保存しました。';
             } elseif ($count > 1) {
-                $message = '画像ファイルを{$const}件保存しました。';
+                $message = "画像ファイルを{$count}件保存しました。";
             } else {
                 $message = '画像ファイルが選択されていません。';
             }
 
-            return redirect()->back()->with('success', $message);
+            DB::commit();
+            return redirect()->back()->with('success',  $message);
         } catch (\Exception $e) {
-            DB::rollback();
+            DB::rollBack();
             return redirect()->back()->with('error', '登録に失敗しました。');
         }
+        //     DB::commit();
+        //     return response()->json(['success' => $message]);
+
+        // }catch (\Exception $e) {
+        //         DB::rollback();
+        //         return response()->json(['error' => '登録に失敗しました。'], 500);
+        //     }
     }
+
+
 
 
     /**

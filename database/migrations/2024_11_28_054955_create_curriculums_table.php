@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('curriculum_progress', function (Blueprint $table) {
+        Schema::create('curriculums', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('curriculums_id', 10);
-            $table->unsignedBigInteger('users_id', 10);
-            $table->tinyInteger('clear_flg', 4);
+            $table->string('title', 255);
+            $table->string('thumbnail', 255)->nullable();
+            $table->text('description')->nullable();
+            $table->string('video_url')->nullable();
+            $table->string('alway_delivery_flg')->unsigned()->comment('ON:1, OFF:0');
+            $table->string('grade_id');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('curriculum_progress');
+        Schema::dropIfExists('curriculums');
     }
 };

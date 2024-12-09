@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user/curriculum_list';
 
     /**
      * Create a new controller instance.
@@ -50,8 +50,11 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'name_kana' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'profile_image' => ['nullable', 'string', 'max:255'],
+            'grade_id' => ['nullable', 'integer'],
         ]);
     }
 
@@ -65,8 +68,11 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'name_kana' => $data['name_kana'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'profile_image' => $data['profile_image'] ?? null,
+            'grade_id' => $data['grade_id'] ?? 1,
         ]);
     }
 }

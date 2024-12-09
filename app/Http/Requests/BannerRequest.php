@@ -13,7 +13,7 @@ class BannerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,18 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'banner_images' => ['required', 'array'],
+            'banner_images.*' => ['file', 'image', 'mimes:jpeg,png,jpg','max:2048'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'banner_images.required' => '画像ファイルを選択してください。',
+            'banner_images.*.image' => '有効な画像ファイルを選択してください。',
+            'banner_images.*.mimes' => 'jpeg, png, jpg形式のみ選択してください。',
+            'banner_images.*.max' => '画像サイズが5MBを超えています。',
         ];
     }
 }

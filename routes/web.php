@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\TopController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\User\CurriculumController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,15 +23,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 
 
@@ -56,6 +57,13 @@ Route::prefix('admin')->namespace('Admin')->name('show.')->group(function () {
         Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
         Route::post('login', [LoginController::class, 'login'])->name('login.send');
     });
+});
+
+Route::prefix('user')->namespace('User')->name('user.')->group(function() {
+    // 時間割
+    Route::get('curriculum_list', [CurriculumController::class, 'showCurriculumList'])->name('show.curriculum.list');
+
+    Route::get('schedules/{yearMonth}/{gradeId}', [CurriculumController::class, 'schedules'])->name('schedules');
 });
 
 

@@ -20,31 +20,33 @@
   <a href="{{ route('show.top') }}" class="back">←戻る</a>
 
   <h1>バナー管理</h1>
-  <form action="{{ route('show.banner.store') }}" method="post" enctype="multipart/form-data">
+  <form action="{{ route('show.banner.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <table id="bannerTable" class="bannerTable">
       <tbody>
         @foreach($banners as $banner)
         <tr>
-          <td><img src="{{ asset('storage/' . $banner->image) }}" id="banner-{{ $banner->id }}" class="banner_image"></td>
+          <td><img src="{{ asset('storage/' . $banner->image) }}" id="banner-{{ $banner->id }}" class="banner_images"></td>
           <td><input type="file" name="banner_images[]" class="file-input" onchange="previewImage(event, 1)" multiple></td>
           <td>
           <button class="delete_button" type="button" onclick="deleteExistingRow({{ $banner->id }}, '{{ route('show.banner.delete', $banner->id) }}')">ー</button>
           </td>
           @if ($errors->any())
             <script>
+              (function () {
               let errorMessage = "";
-              @foreach($errors -> all() as $error)
+              @foreach ($errors -> all() as $error)
                 errorMessage += "{{ $error }}\n";
               @endforeach
               alert(errorMessage);
+              })();
             </script>
           @endif
         </tr>
         @endforeach
       </tbody>
     </table>
-    <button type="button" class="addition_button">+</button>
+    <button type="button" class="addition_button" onclick="addRow()">+</button>
     <input type="submit" class="register" value="登録">
   </form>
 
@@ -54,6 +56,6 @@
   </script>
   @endif
 </body>
-<script src="{{ asset('js/admin/banner_edit.js') }}"></script>
+<script src="{{ asset('/js/admin/banner_edit.js') }}"></script>
 @endsection
 </html>
