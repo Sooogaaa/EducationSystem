@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('title', 255);
             $table->string('thumbnail', 255)->nullable();
             $table->text('description')->nullable();
-            $table->string('video_url')->nullable();
-            $table->string('alway_delivery_flg')->unsigned()->comment('ON:1, OFF:0');
+            $table->text('video_url')->nullable();
+            $table->string('alway_delivery_flg')->nullable(false)->comment('ON:1, OFF:0');
             $table->string('grade_id');
             $table->timestamps();
         });
