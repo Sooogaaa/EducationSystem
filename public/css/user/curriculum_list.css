@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    margin-bottom: 50px;
+}
+
+.schedule {
+    display: flex;
+}
+
+.grade {
+    margin: 40px;
+}
+
+.arrow {
+    font-size: 15px;
+    margin: 10px;
+}
+
+.data {
+    margin: 10px;
+    font-size: 20px;
+}
+
+.grade_data {
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 4px;
+    width: 120px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.btn1 {
+    background-color: rgb(131, 241, 249);
+    color: aliceblue;
+    border-radius: 20px;
+    padding: 4px;
+    width: 120px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 15px;
+}
+
+.btn2 {
+    background-color: rgb(122, 156, 248);
+    color: aliceblue;
+    border-radius: 20px;
+    padding: 4px;
+    width: 120px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 15px;
+}
+
+.btn3 {
+    background-color: rgb(83, 248, 75);
+    color: aliceblue;
+    border-radius: 20px;
+    padding: 4px;
+    width: 120px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 15px;
+}

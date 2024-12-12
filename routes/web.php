@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\TopController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\User\CurriculumController;
+use App\Models\Curriculum;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,8 +63,9 @@ Route::prefix('admin')->namespace('Admin')->name('show.')->group(function () {
 Route::prefix('user')->namespace('User')->name('user.')->group(function() {
     // 時間割
     Route::get('curriculum_list', [CurriculumController::class, 'showCurriculumList'])->name('show.curriculum.list');
-
     Route::get('schedules/{yearMonth}/{gradeId}', [CurriculumController::class, 'schedules'])->name('schedules');
+
+    Route::post('logout', [CurriculumController::class, 'logout'])->name('logout');
 });
 
 

@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@yield('title', 'ユーザー管理')</title>
-  <link rel="stylesheet" href="{{ asset('/css/user/banner.css') }}">
+  <title>@yield('title', 'ユーザートップ')</title>
+  <link rel="stylesheet" href="{{ asset('/css/user/top.css') }}">
 </head>
 
 <body>

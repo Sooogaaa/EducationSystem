@@ -19,6 +19,8 @@ class CurriculumController extends Controller
         $grade = Grade::find($gradeId);
         if(!$grade) {
             Log::warning('してされた学年が見つかりません。', ['gradeId' => $gradeId]);
+            $grade = Grade::first();
+
             return response()->json(['error' => '指定された学年が見つかりません。'], 404);
         }
 
@@ -103,19 +105,15 @@ class CurriculumController extends Controller
     }
 
     // スケジュールがない場合の処理
-    if (empty($schedules)) {
-        return response()->json([
-            'message' => $hasExpiredSchedules
-            ? '配信時間が過ぎました。'
-            :'スケジュールがありません。'
-        ], 200);
-    }
+    if (empty($schedules) && $hasExpiredSchedules) {
+        return response()->json(['message' => '配信期限が過ぎました。'], 200);
+        } elseif (empty($schedules)) {
+            return response()->json(['message' => 'スケジュールがありません。'], 200);
+        }
 
-    return response()->json($schedules);
+        return response()->json($schedules);
 
     }
-
-
 
     public function logout(Request $request) {
         auth()->guard('user')->logout();
