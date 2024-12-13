@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
+
 class CurriculumController extends Controller
 {
     public function showCurriculumList(Request $request) {
@@ -18,8 +19,8 @@ class CurriculumController extends Controller
         // 学年データを取得
         $grade = Grade::find($gradeId);
         if(!$grade) {
-            Log::warning('してされた学年が見つかりません。', ['gradeId' => $gradeId]);
-            $grade = Grade::first();
+            Log::warning('指定された学年が見つかりません。', ['gradeId' => $gradeId]);
+            // $grade = Grade::first();
 
             return response()->json(['error' => '指定された学年が見つかりません。'], 404);
         }
@@ -83,21 +84,21 @@ class CurriculumController extends Controller
                             'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
                         ];
 
-                } else {
-                    $isExpired = Carbon::now()->greaterThan($deliveryTo);
-                    if (!$isExpired) {
-                        $schedules[] = [
-                            'title' => $curriculum->title,
-                            'thumbnail' => $curriculum->thumbnail,
-                            'date' => $deliveryFrom->format('n月j日'),
-                            'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
-                            'isExpired' => false,
-                            'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
-                        ];
                     } else {
-                        $hasExpiredSchedules = true;
+                        $isExpired = Carbon::now()->greaterThan($deliveryTo);
+                        if (!$isExpired) {
+                            $schedules[] = [
+                                'title' => $curriculum->title,
+                                'thumbnail' => $curriculum->thumbnail,
+                                'date' => $deliveryFrom->format('n月j日'),
+                                'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
+                                'isExpired' => false,
+                                'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
+                            ];
+                        } else {
+                            $hasExpiredSchedules = true;
+                        }
                     }
-                }
             } catch (\Exception $e) {
                 Log::error('スケジュールデータの取得に失敗しました。', ['error' => $e->getMessage()]);
             }

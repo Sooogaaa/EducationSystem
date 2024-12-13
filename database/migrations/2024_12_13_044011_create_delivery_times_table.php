@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('delivery_times', function (Blueprint $table) {
             $table->id();
-            $table->string('curriculums_id', 10);
-            $table->dateTime('delivery_form');
+            $table->string('curriculum_id', 10);
+            $table->dateTime('delivery_from');
             $table->dateTime('delivery_to');
             $table->timestamps();
         });

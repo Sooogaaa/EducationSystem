@@ -20,9 +20,6 @@ class Curriculum extends Model
         'grade_id',
     ];
 
-    public function curriculumProgress(){
-        return $this->hasMany(CurriculumProgress::class);
-    }
 
     public function deliveryTimes() {
         return $this->hasMany(DeliveryTime::class);
@@ -40,7 +37,7 @@ class Curriculum extends Model
         return self::find($id);
     }
 
-    public static function getCurriculumSchedule($grade, $startDate, $endDate, $alwaysDeliveryFlag = null) {
+    public static function getCurriculumsSchedule($grade, $startDate, $endDate, $alwaysDeliveryFlag = null) {
         $query = self::with(['deliveryTimes' => function ($query) use ($startDate, $endDate) {
             $query->where(function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('delivery_from', [$startDate, $endDate])->orWhereBetween('delivery_to', [$startDate, $endDate]);

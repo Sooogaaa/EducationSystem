@@ -5,6 +5,7 @@
 }
 
 .container {
+    display: flex;
     margin-bottom: 50px;
 }
 
@@ -13,6 +14,7 @@
 }
 
 .grade {
+    width: 120px;
     margin: 40px;
 }
 
@@ -70,4 +72,40 @@
     cursor: pointer;
     border: 1px solid black;
     font-size: 15px;
+}
+
+/* サムネイル */
+.thumbnail {
+    width: 200px;
+    height: 300px;
+    margin: 30px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+img {
+    width: 170px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.curriculum_title {
+    display: flex;
+}
+
+a {
+    justify-content: center;
+    margin: 12px 0;
+}
+
+li {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+p {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }

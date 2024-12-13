@@ -69,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
     selectGrade(gradeId);
 });
 
-function selectGrade(selectGradeId) {
-    gradeId = selectGradeId;
+function selectGrade(selectedGradeId) {
+    gradeId = selectedGradeId;
     let currentGradeDisplay = document.getElementById("currentGradeDisplay");
     currentGradeDisplay.innerText = gradeNames[gradeId];
 
@@ -95,7 +95,7 @@ function selectGrade(selectGradeId) {
 }
 
 function displaySchedule(schedules) {
-    let scheduleContent = getElementById("scheduleContent");
+    let scheduleContent = document.getElementById("scheduleContent");
     scheduleContent.innerHTML = ""; // 既存内容をクリアにする
 
     if (!Array.isArray(schedules)) {
@@ -125,7 +125,7 @@ function displaySchedule(schedules) {
     for (let date in groupedSchedules) {
         let schedule = document.createElement("div");
         schedule.className = "video";
-        schedule.innerHTML = `<img src="${groupedSchedules[date][0].thumbnail}" alt="動画サムネイル">`;
+        schedule.innerHTML = `<img src="${groupedSchedules[date][0].thumbnail}" alt="サムネイル">`;
 
         let title = document.createElement("a");
         title.className = "curriculum_title";

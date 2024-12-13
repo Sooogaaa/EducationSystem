@@ -26,6 +26,20 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="name_kana" class="col-md-4 col-form-label text-md-end">{{ __('Name Kana') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name_kana" type="text" class="form-control @error('name_kana') is-invalid @enderror" name="name_kana" value="{{ old('name_kana') }}" required autocomplete="name_kana" autofocus>
+
+                                @error('name_kana')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
@@ -58,6 +72,20 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="grade_id" class="col-md-4 col-form-label text-md-end">{{ __('Grade Id') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="grade_id" type="text" class="form-control @error('grade_id') is-invalid @enderror" name="grade_id" value="{{ old('grade_id') }}" required autocomplete="grade_id" autofocus>
+
+                                @error('grade_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 

@@ -42,6 +42,8 @@
   </ul>
 
   <div class="thumbnail" id="scheduleContent"></div>
+
+
 </div>
 </body>
 <script src="{{ asset('/js/user/curriculum_list.js') }}"></script>
