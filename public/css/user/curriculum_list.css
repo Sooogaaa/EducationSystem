@@ -29,11 +29,11 @@
 }
 
 .grade_data {
-    margin: 10px;
+    margin: 10px 0 10px 40px;
     border: 1px solid black;
     border-radius: 20px;
     padding: 5px;
-    width: 120px;
+    width: 140px;
     font-size: 15px;
     display: flex;
     align-items: center;
