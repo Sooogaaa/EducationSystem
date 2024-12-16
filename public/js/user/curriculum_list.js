@@ -74,6 +74,10 @@ function selectGrade(selectedGradeId) {
     let currentGradeDisplay = document.getElementById("currentGradeDisplay");
     currentGradeDisplay.innerText = gradeNames[gradeId];
 
+    currentGradeDisplay.className = "grade_data";
+
+    currentGradeDisplay.classList.add(`grade${selectedGradeId}`);
+
     let buttons = document.querySelectorAll(".grade button");
     buttons.forEach((button) => {
         button.classList.remove("selected");

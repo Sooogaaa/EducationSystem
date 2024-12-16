@@ -15,7 +15,7 @@
 
 .grade {
     width: 120px;
-    margin: 40px;
+    margin: 40px 60px 40px 40px;
 }
 
 .arrow {
@@ -25,17 +25,46 @@
 
 .data {
     margin: 10px;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .grade_data {
     margin: 10px;
     border: 1px solid black;
     border-radius: 20px;
-    padding: 4px;
+    padding: 5px;
     width: 120px;
     font-size: 15px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grade_data.grade1,
+.grade_data.grade2,
+.grade_data.grade3,
+.grade_data.grade4,
+.grade_data.grade5,
+.grade_data.grade6 {
+    background-color: rgb(131, 241, 249);
+    color: aliceblue;
+    border: 1px solid black;
+}
+
+.grade_data.grade7,
+.grade_data.grade8,
+.grade_data.grade9 {
+    background-color: rgb(122, 156, 248);
+    color: aliceblue;
+    border: 1px solid black;
+}
+
+.grade_data.grade10,
+.grade_data.grade11,
+.grade_data.grade12 {
+    background-color: rgb(83, 248, 75);
+    color: aliceblue;
+    border: 1px solid black;
 }
 
 .btn1 {
@@ -47,7 +76,7 @@
     margin-bottom: 15px;
     cursor: pointer;
     border: 1px solid black;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .btn2 {
@@ -59,7 +88,7 @@
     margin-bottom: 15px;
     cursor: pointer;
     border: 1px solid black;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .btn3 {
@@ -71,26 +100,34 @@
     margin-bottom: 15px;
     cursor: pointer;
     border: 1px solid black;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 /* サムネイル */
 .thumbnail {
-    width: 200px;
-    height: 300px;
-    margin: 30px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.video {
+    width: 250px;
+    height: 350px;
+    margin: 20px;
     text-align: center;
     border: 1px solid black;
 }
 
 img {
-    width: 170px;
+    width: 220px;
     margin-top: 15px;
     text-align: center;
 }
 
 .curriculum_title {
     display: flex;
+    text-decoration: none;
 }
 
 a {
