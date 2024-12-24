@@ -58,17 +58,11 @@ class BannerController extends Controller
 
             DB::commit();
             return redirect()->back()->with('success',  $message);
+            // return redirect()->route('show.banner.edit')->with('success',  $message);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', '登録に失敗しました。');
         }
-        //     DB::commit();
-        //     return response()->json(['success' => $message]);
-
-        // }catch (\Exception $e) {
-        //         DB::rollback();
-        //         return response()->json(['error' => '登録に失敗しました。'], 500);
-        //     }
     }
 
 

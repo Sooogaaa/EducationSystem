@@ -45,42 +45,6 @@ function deleteRow(button) {
     row.remove();
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const form = document.querySelector("form");
-//     const csrfToken = document
-//         .querySelector('meta[name="csrf-token"]')
-//         .getAttribute("content");
-
-//     form.addEventListener("submit", function (event) {
-//         event.preventDefault();
-
-//         const formData = new FormData(form);
-//         const url = form.action;
-
-//         $.ajax({
-//             url: url,
-//             type: "POST",
-//             headers: {
-//                 "X-CSRF-TOKEN": csrfToken,
-//             },
-//             data: formData,
-//             processData: false,
-//             contentType: false,
-//             dataType: "json",
-//             success: function (data) {
-//                 alert(data.success || "ファイルを保存しました。", "success");
-//                 updateBannerList(data.newBanners);
-//             },
-//             error: function (xhr) {
-//                 if (xhr.responseJSON && xhr.responseJSON.error) {
-//                     alert(xhr.responseJSON.error);
-//                 } else {
-//                     alert("登録に失敗しました。");
-//                 }
-//             },
-//         });
-//     });
-// });
 
 function deleteExistingRow(bannerId, deleteUrl) {
     if (confirm("削除しますか？")) {

@@ -9,12 +9,12 @@ body {
 }
 
 .back {
-    margin-left: 50px;
+    margin-left: 80px;
     text-decoration: none;
 }
 
 h1 {
-    margin: 5px 0 5px 50px;
+    margin: 5px 0 5px 80px;
 }
 
 .bannerTable {
@@ -36,9 +36,9 @@ h1 {
     line-height: 25px;
     font-size: 25px;
     cursor: pointer;
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    position: relative;
     margin: 20px 20px 20px 350px;
 }
 
@@ -51,9 +51,6 @@ h1 {
     font-size: 20px;
     font-weight: 1000;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
     margin: 0;
     padding: 0;
 }
@@ -66,4 +63,14 @@ h1 {
     border: none;
     display: flex;
     margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .banner_images {
+        width: 100px;
+    }
+
+    .addition_button {
+        margin: 20px 20px 20px 50px;
+    }
 }

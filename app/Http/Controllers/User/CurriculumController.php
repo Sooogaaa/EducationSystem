@@ -20,7 +20,6 @@ class CurriculumController extends Controller
         $grade = Grade::find($gradeId);
         if(!$grade) {
             Log::warning('指定された学年が見つかりません。', ['gradeId' => $gradeId]);
-            // $grade = Grade::first();
 
             return response()->json(['error' => '指定された学年が見つかりません。'], 404);
         }
@@ -39,24 +38,7 @@ class CurriculumController extends Controller
         }
 
         // カリキュラムの取得
-        try {
-            $curriculumsTrue = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate, true);
-            $curriculumsFalse = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate, false);
-            $curriculumsAll = $curriculumsTrue->merge($curriculumsFalse);
-
-            // カリキュラムが存在しない場合
-            if ($curriculumsAll->isEmpty()) {
-                Log::warning('指定された条件に一致するカリキュラムが見つかりません。', [
-                    'yearMonth' => $yearMonth,
-                    'gradeId' => $gradeId,
-                ]);
-
-                return response()->json(['error' => '指定された条件に一致するカリキュラムが見つかりません。'], 404);
-            }
-        } catch (\Exception $e) {
-            Log::error('カリキュラムの取得に失敗しました: ' . $e->getMessage());
-            return response()->json(['error' => 'カリキュラムの取得に失敗しました。'], 500);
-        }
+        $curriculumsAll = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate);
 
         // スケジュールデータの作成
         $schedules = [];
@@ -78,29 +60,31 @@ class CurriculumController extends Controller
                         $schedules[] = [
                             'title' => $curriculum->title,
                             'thumbnail' => $curriculum->thumbnail,
-                            'date' => $deliveryFrom->format('n月j日'),
-                            'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
+                            'date' => $deliveryFrom ? $deliveryFrom->format('n月j日') : '常時公開',
+                            'time' => $deliveryFrom && $deliveryTo
+                                        ? $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i')
+                                        :'常時公開',
                             'isExpired' => false,
                             'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
                         ];
 
-                    } else {
-                        $isExpired = Carbon::now()->greaterThan($deliveryTo);
-                        if (!$isExpired) {
-                            $schedules[] = [
-                                'title' => $curriculum->title,
-                                'thumbnail' => $curriculum->thumbnail,
-                                'date' => $deliveryFrom->format('n月j日'),
-                                'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
-                                'isExpired' => false,
-                                'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
-                            ];
+                    } elseif (!$deliveryTo || Carbon::now()->lessThanOrEqualTo($deliveryTo)) {
+                        // 配信期間内
+                        $schedules[] = [
+                            'title' => $curriculum->title,
+                            'thumbnail' => $curriculum->thumbnail,
+                            'date' => $deliveryFrom ? $deliveryFrom->format('n月j日') : '未設定',
+                            'time' => $deliveryFrom && $deliveryTo
+                                        ? $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i')
+                                        :'未設定',
+                            'isExpired' => false,
+                            'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
+                        ];
                         } else {
                             $hasExpiredSchedules = true;
                         }
-                    }
-            } catch (\Exception $e) {
-                Log::error('スケジュールデータの取得に失敗しました。', ['error' => $e->getMessage()]);
+                } catch (\Exception $e) {
+                    Log::error('スケジュールデータの取得に失敗しました。', ['error' => $e->getMessage()]);
             }
         }
     }

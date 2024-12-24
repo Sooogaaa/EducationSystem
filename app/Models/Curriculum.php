@@ -37,21 +37,27 @@ class Curriculum extends Model
         return self::find($id);
     }
 
-    public static function getCurriculumsSchedule($grade, $startDate, $endDate, $alwaysDeliveryFlag = null) {
-        $query = self::with(['deliveryTimes' => function ($query) use ($startDate, $endDate) {
+    public static function getCurriculumsSchedule($gradeId, $startDate, $endDate)
+    {
+        return self::with(['deliveryTimes' => function ($query) use ($startDate, $endDate) {
             $query->where(function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('delivery_from', [$startDate, $endDate])->orWhereBetween('delivery_to', [$startDate, $endDate]);
+                $query->whereBetween('delivery_from', [$startDate, $endDate])
+                    ->orWhereBetween('delivery_to', [$startDate, $endDate]);
             });
         }])
-        ->whereHas('grade', function ($query) use ($grade) {
-            $query->where('id', $grade);
-        });
-        if (!is_null($alwaysDeliveryFlag)) {
-            $query->whereHas('deliveryTimes', function ($query) use ($alwaysDeliveryFlag) {
-                $query->where('alway_delivery_flg', $alwaysDeliveryFlag);
-            });
-        }
 
-        return $query->get();
+        // 表示学年で常時公開がON or 表示学年で配信期間が表示月内
+        ->where(function ($query) use ($gradeId) {
+            // 表示学年
+            $query->whereHas('grade', function ($query) use ($gradeId) {
+                $query->where('id', $gradeId);
+            })
+            // 常時公開flgがON
+            ->whereHas('deliveryTimes', function ($query) {
+                $query->where('alway_delivery_flg', 1);
+            });
+        })
+
+        ->get();
     }
 }
