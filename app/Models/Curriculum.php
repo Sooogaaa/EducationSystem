@@ -37,41 +37,27 @@ class Curriculum extends Model
         return self::find($id);
     }
 
-    public static function getCurriculumsSchedule($gradeId, $startDate, $endDate)
-    {
-        $query = self::with(['deliveryTimes' => function ($query) use ($startDate, $endDate) {
-            $query->where(function ($query) use ($startDate, $endDate) {
-                // 配信期間内
-                $query->whereBetween('delivery_from', [$startDate, $endDate])
-                    ->orWhereBetween('delivery_to', [$startDate, $endDate]);
+    public static function getCurriculumsSchedule($gradeId, $startDate, $endDate) {
+        // 指定された学年と一致するものを絞り込む
+        $curriculums = Self::where('grade_id', $gradeId)
+        ->where(function ($query) use ($startDate, $endDate) {
+            // 常時公開フラグ
+            $query->where('alway_delivery_flg', 1)
+            // 配信期間が表示月内
+            ->orWhere(function ($query) use ($startDate, $endDate) {
+                $query->whereHas('deliveryTimes', function ($query) use ($startDate, $endDate) {
+                    $query->where('delivery_from', '<=', $endDate) //配信開始日が検索範囲以前
+                        ->where('delivery_to', '>=', $startDate);  //配信終了日が検索範囲以降
+                });
             });
+        })
+        // 配信終了日が検索範囲の開始日以降である配信時間だけを取得
+        ->with(['deliveryTimes' => function ($query) use ($startDate, $endDate) {
+            $query->where('delivery_from', '<=', $endDate)
+                ->where('delivery_to', '>=', $startDate);
         }])
+        ->get();
 
-        // 表示学年で常時公開がON or 表示学年で配信期間が表示月内
-        ->where(function ($query) use ($gradeId, $startDate, $endDate) {
-            $query->where(function ($query) use ($gradeId) {
-            // 表示学年
-            $query->whereHas('grade', function ($query) use ($gradeId) {
-                $query->where('id', $gradeId);
-            })
-            // 常時公開flgがON
-            ->whereHas('deliveryTimes', function ($query) {
-                $query->where('alway_delivery_flg', 1);
-                });
-            })
-
-            // 学年が表示学年かつ配信期間が表示月内
-            ->orWhere(function ($query) use ($gradeId, $startDate, $endDate) {
-                $query->whereHas('grade', function ($query) use ($gradeId) {
-                    $query->where('id', $gradeId);
-                })
-                ->whereHas('deliveryTimes', function ($query) use ($startDate, $endDate) {
-                    $query->whereBetween('delivery_from', [$startDate, $endDate])
-                        ->orWhereBetween('delivery_to', [$startDate, $endDate]);
-                });
-            });
-        });
-
-        return $query->get();
+        return $curriculums;
     }
 }
