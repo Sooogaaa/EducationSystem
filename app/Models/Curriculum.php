@@ -39,15 +39,17 @@ class Curriculum extends Model
 
     public static function getCurriculumsSchedule($gradeId, $startDate, $endDate)
     {
-        return self::with(['deliveryTimes' => function ($query) use ($startDate, $endDate) {
+        $query = self::with(['deliveryTimes' => function ($query) use ($startDate, $endDate) {
             $query->where(function ($query) use ($startDate, $endDate) {
+                // 配信期間内
                 $query->whereBetween('delivery_from', [$startDate, $endDate])
                     ->orWhereBetween('delivery_to', [$startDate, $endDate]);
             });
         }])
 
         // 表示学年で常時公開がON or 表示学年で配信期間が表示月内
-        ->where(function ($query) use ($gradeId) {
+        ->where(function ($query) use ($gradeId, $startDate, $endDate) {
+            $query->where(function ($query) use ($gradeId) {
             // 表示学年
             $query->whereHas('grade', function ($query) use ($gradeId) {
                 $query->where('id', $gradeId);
@@ -55,9 +57,21 @@ class Curriculum extends Model
             // 常時公開flgがON
             ->whereHas('deliveryTimes', function ($query) {
                 $query->where('alway_delivery_flg', 1);
-            });
-        })
+                });
+            })
 
-        ->get();
+            // 学年が表示学年かつ配信期間が表示月内
+            ->orWhere(function ($query) use ($gradeId, $startDate, $endDate) {
+                $query->whereHas('grade', function ($query) use ($gradeId) {
+                    $query->where('id', $gradeId);
+                })
+                ->whereHas('deliveryTimes', function ($query) use ($startDate, $endDate) {
+                    $query->whereBetween('delivery_from', [$startDate, $endDate])
+                        ->orWhereBetween('delivery_to', [$startDate, $endDate]);
+                });
+            });
+        });
+
+        return $query->get();
     }
 }

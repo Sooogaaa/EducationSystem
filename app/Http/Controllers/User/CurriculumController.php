@@ -38,7 +38,20 @@ class CurriculumController extends Controller
         }
 
         // カリキュラムの取得
-        $curriculumsAll = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate);
+        try {
+            $curriculumsAll = Curriculum::getCurriculumsSchedule($gradeId, $startDate, $endDate);
+
+            if ($curriculumsAll->isEmpty()) {
+                Log::warning('指定された条件に一致するカリキュラムが見つかりません。', [
+                    'yearMonth' => $yearMonth,
+                    'gradeId' => $gradeId,
+                ]);
+                return response()->json(['error' => '指定された条件に一致するカリキュラムが見つかりません。'], 404);
+            }
+        } catch (\Exception $e) {
+            Log::error('カリキュラムの取得に失敗しました: ' . $e->getMessage());
+            return response()->json(['error' => 'カリキュラムの取得に失敗しました。'], 500);
+        }
 
         // スケジュールデータの作成
         $schedules = [];
@@ -60,23 +73,19 @@ class CurriculumController extends Controller
                         $schedules[] = [
                             'title' => $curriculum->title,
                             'thumbnail' => $curriculum->thumbnail,
-                            'date' => $deliveryFrom ? $deliveryFrom->format('n月j日') : '常時公開',
-                            'time' => $deliveryFrom && $deliveryTo
-                                        ? $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i')
-                                        :'常時公開',
+                            'date' => $deliveryFrom->format('n月j日'),
+                            'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
                             'isExpired' => false,
                             'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
                         ];
 
-                    } elseif (!$deliveryTo || Carbon::now()->lessThanOrEqualTo($deliveryTo)) {
+                    } elseif (!$deliveryTo || Carbon::now()->greaterThan($deliveryTo)) {
                         // 配信期間内
                         $schedules[] = [
                             'title' => $curriculum->title,
                             'thumbnail' => $curriculum->thumbnail,
-                            'date' => $deliveryFrom ? $deliveryFrom->format('n月j日') : '未設定',
-                            'time' => $deliveryFrom && $deliveryTo
-                                        ? $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i')
-                                        :'未設定',
+                            'date' => $deliveryFrom->format('n月j日'),
+                            'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
                             'isExpired' => false,
                             'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
                         ];
