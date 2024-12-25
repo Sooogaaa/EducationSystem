@@ -68,8 +68,8 @@ class CurriculumController extends Controller
                         ? $deliveryTime->delivery_to
                         : Carbon::parse($deliveryTime->delivery_to);
 
-                    // 常時公開フラグの処理
-                    if ($curriculum->alway_delivery_flg == 1) {
+                    // 常時公開フラグor配信期間内の処理
+                    if ($curriculum->alway_delivery_flg == 1 || Carbon::now()->between($deliveryFrom, $deliveryTo)) {
                         $schedules[] = [
                             'title' => $curriculum->title,
                             'thumbnail' => $curriculum->thumbnail,
@@ -79,19 +79,23 @@ class CurriculumController extends Controller
                             'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
                         ];
 
-                    } elseif (!$deliveryTo || Carbon::now()->greaterThan($deliveryTo)) {
-                        // 配信期間内
-                        $schedules[] = [
-                            'title' => $curriculum->title,
-                            'thumbnail' => $curriculum->thumbnail,
-                            'date' => $deliveryFrom->format('n月j日'),
-                            'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
-                            'isExpired' => false,
-                            'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
-                        ];
-                        } else {
-                            $hasExpiredSchedules = true;
-                        }
+                    } elseif (Carbon::now()->greaterThan($deliveryFrom, $deliveryTo)) {
+                        $hasExpiredSchedules = true;
+                    }
+
+                    // } elseif (Carbon::now()->greaterThan($deliveryFrom, $deliveryTo)) {
+                    //     // 配信期間内
+                    //     $schedules[] = [
+                    //         'title' => $curriculum->title,
+                    //         'thumbnail' => $curriculum->thumbnail,
+                    //         'date' => $deliveryFrom->format('n月j日'),
+                    //         'time' => $deliveryFrom->format('H:i') . '〜' . $deliveryTo->format('H:i'),
+                    //         'isExpired' => false,
+                    //         'alway_delivery_flg' => $deliveryTime->alway_delivery_flg,
+                    //     ];
+                    //     } else {
+                    //         $hasExpiredSchedules = true;
+                    // }
                 } catch (\Exception $e) {
                     Log::error('スケジュールデータの取得に失敗しました。', ['error' => $e->getMessage()]);
             }
